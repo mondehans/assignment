@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,22 +24,33 @@ import net.monde.assignment.infrasctructure.v1.User;
 @Service
 public class RemoteClientImpl implements RemoteClient{
 
-	private String userURL="http://userservice.staging.tangentmicroservices.com:80/api/v1/users/";
+	@Value("${userURL}")
+	private String userURL;
+	@Value("${usermeURL}")
+	private String usermeURL;
+	@Value("${loginURl}")
+	private String loginURl;
 	
-	private String usermeURL="http://userservice.staging.tangentmicroservices.com:80/api/v1/users/me/";
+	@Value("${projectsUrl}")
+	private String projectsUrl;
 	
-	private String loginURl="http://userservice.staging.tangentmicroservices.com/api-token-auth/";
-	private String projectsUrl="http://projectservice.staging.tangentmicroservices.com:80/api/v1/projects/";
 	private Optional<Token> token;
+	
 	@Autowired 
 	private RestTemplate template;
+	
+	@Value("${remoteUser}")
+	private String username;
+	
+	@Value("${remoteUser}")
+	private String password;
 	
 	public String login() {
 		// TODO Auto-generated method stub
 		MultiValueMap<String, String> uriVariables= new LinkedMultiValueMap<String, String>();
 		
-		uriVariables.add("username", "admin1");
-		uriVariables.add("password", "admin1");
+		uriVariables.add("username", username);
+		uriVariables.add("password", password);
 		Token tmp=template.postForObject(loginURl,  uriVariables, Token.class);
 		token = Optional.of(tmp);
 	

@@ -9,6 +9,17 @@
 	<title>Projects List</title>
 	<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
 	<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="http://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function() {
+    
+    $('#projectList').DataTable( {
+    	"lengthChange": false,
+    	"dom": '<"top"i>rt<"bottom"flp><"clear">'
+    } );
+});
+</script>
 </head>
 
 <body>
@@ -21,7 +32,7 @@
 		<div id="innercontent">
 			  <!-- Default panel contents -->
 		  	<div ><span><h3>List of Projects</h3> </span></div>
-			<table>
+			<table id="projectList">
 	    		<thead>
 		      		<tr>
 				        <th>Id</th>
@@ -33,7 +44,7 @@
 	    		<tbody>
 		<c:forEach items="${projects}" var="project">
 					<tr>
-						<td><a href="/assignment1/api/v1/projects/${project.id}">${project.id}</a></a></td>
+						<td><a href="/assignment1/api/v1/projects/${project.id}">${project.id}</a></td>
 						<td>${project.title}</td>
 						<td>${project.description}</td>
 					</tr> 

@@ -1,7 +1,11 @@
 package net.monde.assignment.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.AuthenticationTrustResolver;
+import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,11 +16,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
+	@Autowired
+	Environment env;
+
 		@Autowired
 		public void configureGlobal(AuthenticationManagerBuilder authenticationMgr) throws Exception {
 			authenticationMgr.inMemoryAuthentication()
-				.withUser("admin1")
-				.password("admin1")
+				.withUser(env.getProperty("username"))
+				.password(env.getProperty("password"))
 				.authorities("ROLE_USER");
 			
 		}
@@ -35,5 +42,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			
 			
 		}
+		
+		@Bean
+		public AuthenticationTrustResolver getAuthenticationTrustResolver() {
+			return new AuthenticationTrustResolverImpl();
+		}
+
 
 }

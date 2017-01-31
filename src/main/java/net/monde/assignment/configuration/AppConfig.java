@@ -5,7 +5,8 @@ import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -22,7 +23,10 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "net.monde.assignment")
-//@Import(value = { SecurityConfiguration.class })
+@PropertySources({
+	@PropertySource("classpath:config.properties"),
+	@PropertySource("classpath:remoteclient.properties")
+})
 public class AppConfig extends WebMvcConfigurerAdapter{
 
 	@Bean

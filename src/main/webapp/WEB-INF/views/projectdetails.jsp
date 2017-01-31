@@ -9,6 +9,21 @@
 	<title>Projects List</title>
 	<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
 	<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="http://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function() {
+    $("#taskList").DataTable({
+    	"lengthChange": false,
+    	"dom": '<"top"i>rt<"bottom"flp><"clear">'
+    } );
+    
+    $("#resourceList").DataTable({
+    	"lengthChange": false,
+    	"dom": '<"top"i>rt<"bottom"flp><"clear">'
+    } );
+});
+</script>
 </head>
 
 <body>
@@ -62,7 +77,7 @@
 	    	</table>
 	
 	    	<div ><span> <h3>Task Details</h3> </span></div>
-	    		<table>
+	    		<table id="taskList">
 	    		<thead>
 		      		<tr>
 				        <th>Id</th>
@@ -86,7 +101,7 @@
 		</div>
 	
 			<div ><span> <h3>Resource Details</h3> </span></div>
-	    		<table>
+	    		<table id="resourceList">
 	    		<thead>
 		      		<tr>
 				        <th>Id</th>
